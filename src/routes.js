@@ -2,9 +2,9 @@ import React from 'react';
 
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import Ticket from './componenents/Ticket';
+import Ticket from './componenents/ticket';
 
-import Tracker from './componenents/Tracker';
+import Tracker from './componenents/tracker';
 
 const Routes = () => (
     <Router>

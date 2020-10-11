@@ -2,6 +2,7 @@ import React, { Component, } from 'react';
 import L from 'leaflet';
 import { Map, TileLayer, Marker, Popup, GeoJSON } from 'react-leaflet';
 import { HubConnectionBuilder } from '@microsoft/signalr';
+import AppBar from '../appbar/index'
 
 import service from '../../services/serviceapi';
 
@@ -49,6 +50,7 @@ export default class Tracker extends Component {
       departureDate: new Date(),
       connection: null,
       geoJson: null,
+      service: localStorage.getItem("@tracker-app/service")
 
     };
 
@@ -68,6 +70,7 @@ export default class Tracker extends Component {
 
 
   async componentDidMount() {
+    
 
     await this.getRoutes();
     const newConnection = new HubConnectionBuilder()
@@ -114,8 +117,6 @@ export default class Tracker extends Component {
     const response = await service.get(endpoint);
     const r = JSON.parse(response.data.route);
 
-    debugger;
-
     this.geoJsonLayer.current.leafletElement.clearLayers().addData(r);
     this.setState({
       geoJson: r,
@@ -142,19 +143,11 @@ export default class Tracker extends Component {
 
     return (
       <>
-        <header className="app-bar">
-          <span className="material-icons" onClick={this.goBack}>arrow_back</span>
-          <span className="material-icons">directions_bus</span> 
-          <span className="label">007</span>
-        </header>
-        <div className="info-line">
-          <span>007 - NOVA IGUAÇU ANGRA - IDA</span>
-        </div>
-
-        <div className="info-detail">
-          <h1>hello</h1>
-        </div>
-
+      
+        <AppBar 
+          goBack={this.goBack}
+          service={this.state.service}
+        />
 
         <Map
           center={vehiclePoinPosititon}
